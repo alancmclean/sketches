@@ -1,2 +1,6 @@
-*
-!.gitignore
+node_modules
+tmp/*
+static/screenshots/*
+data/*
+repository/*
+.DS_Store

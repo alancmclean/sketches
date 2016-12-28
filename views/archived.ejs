@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+  <html>
+  <head>
+    <% include partials/header %>
+  </head>
+
+  <body class="mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <%- include partials/dialog %>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <% include partials/navbar %>
+    
+      <main class="mdl-layout__content">
+        <section class="mdl-grid">
+          <% sketches.forEach(function(sketch, i){ %>
+            <%- include('partials/sketch', { sketch: sketch }) %>
+          <% })%>            
+        </section>  
+      </main>
+    </div>  
+    <%- include('partials/footer') %>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+ <div class="mdl-cell mdl-cell--2-col mdl-cell--12-col-phone sketch-card mdl-card mdl-shadow--2dp" data-slug="<%- sketch.slug %>">
+            
+    <div class="mdl-card__title mdl-card--expand" style="background-image: url(/screenshots/<%- sketch.slug %>/latest.jpg);">
+      <h2 class="mdl-card__title-text"><%- sketch.name %></h2>
+    </div>
+  <div class="mdl-card__supporting-text"><%- sketch.description %></div>
+    <div class="mdl-card__actions mdl-card--border">
+      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="<%- `${BASE_URL}/view/${sketch.slug}/latest/` %>" target="_blank">
+        <i class="material-icons md-light">visibility</i> Latest
+      </a>
+      <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="<%- `${BASE_URL}/sketches/${sketch.slug}` %>">
+        <i class="material-icons md-light">list</i> Details
+      </a>
+    </div>
+    <div class="mdl-card__menu">
+      <button id="menu-<%- sketch.slug %>" class="mdl-button mdl-js-button mdl-button--icon">
+      <i class="material-icons">more_vert</i>
+      </button>
+
+    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="menu-<%- sketch.slug %>">
+      <% if (sketch.status === 1){ %>
+      <li class="mdl-menu__item mdl-menu__item--full-bleed-divider" onclick="handleArchive('<%- sketch.slug %>')">Archive</li>
+      <% }else{ %>
+      <li class="mdl-menu__item mdl-menu__item--full-bleed-divider" onclick="handleActivate('<%- sketch.slug %>')">Restore to Active</li>
+      <% } %>
+      
+      <li class="mdl-menu__item alert" onclick="handleDelete('<%- sketch.slug %>')">Delete</li>
+    </ul>
+  </div>
+</div>

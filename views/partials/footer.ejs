@@ -1,0 +1,66 @@
+<!-- footer -->
+<script defer src="https://code.getmdl.io/1.2.1/material.min.js"></script>
+<script defer src="/js/mdl-selectfield.min.js"></script>
+<script>
+  var dialog = document.querySelector('dialog');
+  var showDialogButton = document.querySelector('#add');
+  if (! dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  showDialogButton.addEventListener('click', function() {
+    dialog.showModal();
+  });
+  dialog.querySelector('.close').addEventListener('click', function() {
+    dialog.close();
+  });
+
+  document.querySelector('#create-template').addEventListener('change', function(e) {
+    var wrap = document.querySelector('#create-path-wrap');
+    if(e.target.value === 'existing'){
+      wrap.style.display = ""
+    }else{
+      wrap.style.display = 'none';
+    }
+  });
+
+  var removeItem = function(response, slug){    
+    if(response.status === 200){
+      document.querySelector(`.sketch-card[data-slug="${slug}"]`).remove();
+    }
+    return response;
+  }
+
+  var handleDelete = function(slug){
+    fetch(`<%- BASE_URL %>/sketches/${slug}/delete`)
+      .then(function(response){
+        removeItem(response, slug);
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  };
+
+  var handleArchive = function(slug){
+    fetch(`<%- BASE_URL %>/sketches/${slug}/archive`)
+      .then(function(response){
+        removeItem(response, slug);
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  };
+
+  var handleActivate = function(slug){
+    fetch(`<%- BASE_URL %>/sketches/${slug}/activate`)
+      .then(function(response){
+        removeItem(response, slug);
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  };
+
+  
+
+</script>
+<!-- footer -->

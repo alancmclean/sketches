@@ -1,0 +1,29 @@
+<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+  
+  <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+    <h3>Sketch Server</h3>
+  </div>
+  
+  <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+    <!-- <a href="/" class="mdl-layout__tab <% if(active==='home'){ %> is-active <% } %>>">Home</a> -->
+    <a href="<%- BASE_URL %>/sketches" class="mdl-layout__tab <% if(active==='sketches'){ %> is-active<% } %>">Sketches</a>
+    <!-- <a href="/settings" class="mdl-layout__tab">Settings</a> -->
+    <a href="<%- BASE_URL %>/archived" class="mdl-layout__tab <% if(active==='archived'){ %> is-active<% } %>">Archived</a>
+    <form action="#" style="display:none">
+      <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+      <label class="mdl-button mdl-js-button mdl-button--icon" for="sample6">
+        <i class="material-icons">search</i>
+      </label>
+        <div class="mdl-textfield__expandable-holder">
+          <input class="mdl-textfield__input" type="text" id="sample6" placeholder="Find a Sketch">
+          <label class="mdl-textfield__label" for="sample-expandable">Expandable Input</label>
+        </div>
+      </div>
+    </form>
+
+    <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent" id="add">
+      <i class="material-icons" role="presentation">add</i>
+      <span class="visuallyhidden">Add</span>
+    </button>
+  </div>
+</header>

@@ -1,0 +1,31 @@
+#!/usr/bin/env node
+ 
+var fs = require('fs');
+var child = require("child_process");
+var path = require("path");
+
+var repoPath = path.resolve( __dirname, "../");
+var scriptPath = path.resolve( __dirname, "../../../bin/","hooks.js");
+
+console.log('hooks called!');
+
+var content = '';
+process.stdin.on('data', function(buf) { content += buf.toString(); });
+process.stdin.on('end', function() {
+  var slug = repoPath
+    .replace(path.dirname(repoPath), '')
+    .replace('.git', '')
+    .replace('/', '');
+
+  var commitArgs = content.split('').join('').split(' ');
+  var rev = commitArgs[1];
+  console.log('path!', scriptPath);
+  child.exec(`node ${scriptPath} ${slug} ${rev}`, function(err, out) {
+    if (err instanceof Error) {
+      throw err;
+    }
+
+    process.stdout.write(out);
+    process.exit(0);
+  })
+});

@@ -1,0 +1,30 @@
+{
+  "name": "datasketch",
+  "description": "Serves all your static git repos",
+  "version": "0.0.5",
+  "author": "Alan McLean",
+  "bin": {
+    "sketch-server": "bin/server.js"
+  },
+  "dependencies": {
+    "body-parser": "latest",
+    "ejs": "latest",
+    "express": ">=4.0.0",
+    "express-helpers": "latest",
+    "express-formidable": "latest",
+    "fs-extra-promise": "latest",
+    "material-design-lite": "^1.2.1",
+    "materialize-css": "latest",
+    "method-override": "latest",
+    "mime": "latest",
+    "node-persist": "latest",
+    "nodegit": "latest",
+    "material-design-lite": "latest",
+    "d3-time-format": "latest",
+    "mobile-detect": "latest",
+    "optimist": "latest",
+    "capturejs": "latest",
+    "lwip": "latest"
+  },
+  "devDependencies": {}
+}
