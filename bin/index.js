@@ -116,7 +116,7 @@ app.get('/', function(req, res) {
 });
 
 
-app.post(`${BASE_URL}/create/submit`, function(req, res) {
+app.post(`/create/submit`, function(req, res) {
   var name  = req.body.name || `default-${id}`,
     description = req.body.description || "",
     tags  = req.body.tags || "",
@@ -156,9 +156,6 @@ app.post(`${BASE_URL}/create/submit`, function(req, res) {
     });
 });
 
-app.get(`${BASE_URL}/manage`, function(req, res) {
-  res.send('sketch admin');
-});
 
 // app.get(`${BASE_URL}/sketches`, function(req, res) {
 //   var sketches = SketchController.get().filter(function(sketch){ return sketch.status > 0; });
@@ -173,7 +170,7 @@ app.get(`${BASE_URL}/manage`, function(req, res) {
 //   }
 // });
 
-app.get(`${BASE_URL}/archived`, function(req, res) {
+app.get(`/archived`, function(req, res) {
   var sketches = SketchController.get().filter(function(sketch){ return sketch.status < 1; });
   if(!sketches){
     res.send('sketches list is empty');
@@ -191,7 +188,7 @@ app.get(`${BASE_URL}/archived`, function(req, res) {
 
 // });
 
-app.get(`${BASE_URL}/sketches/:slug`, function(req, res) {
+app.get(`/sketches/:slug`, function(req, res) {
   var sketch = SketchController.get(req.params.slug);
   if(!sketch){
     res.status(404).send("error, sketch doesnt exist");
@@ -219,7 +216,7 @@ app.get(`${BASE_URL}/sketches/:slug`, function(req, res) {
 });
 
 
-app.post(`${BASE_URL}/sketches/:slug/update`, function(req, res) {
+app.post(`/sketches/:slug/update`, function(req, res) {
   // if(!sketch){
   //   res.status(404).send("error, sketch doesnt exist");
   // }else{
@@ -230,11 +227,11 @@ app.post(`${BASE_URL}/sketches/:slug/update`, function(req, res) {
 });
 
 
-app.get(`${BASE_URL}/view/:slug/latest`, function(req, res) {
+app.get(`/view/:slug/latest`, function(req, res) {
   res.redirect(`/view/${req.params.slug}/latest/`);
 });
 
-app.get(`${BASE_URL}/view/:slug/:branch/latest/*?`, function(req, res) {
+app.get(`/view/:slug/:branch/latest/*?`, function(req, res) {
   var revision  = `branch=${req.params.branch}`,
       path      = (!req.params[0]) ? 'index.html' : req.params[0];
     
@@ -251,7 +248,7 @@ app.get(`${BASE_URL}/view/:slug/:branch/latest/*?`, function(req, res) {
   }
 });
 
-app.get(`${BASE_URL}/view/:slug/:commit/*?`, function(req, res) {
+app.get(`/view/:slug/:commit/*?`, function(req, res) {
   var commit    = req.params.commit,
       path      = (!req.params[0]) ? 'index.html' : req.params[0];
     
@@ -272,17 +269,17 @@ app.get(`${BASE_URL}/view/:slug/:commit/*?`, function(req, res) {
 
 
 // assuming success on any of this is obv a TODO
-app.get(`${BASE_URL}/sketches/:slug/archive`, function(req, res) {
+app.get(`/sketches/:slug/archive`, function(req, res) {
   SketchController.archive(req.params.slug);
   res.json({ success: true });
 });
 
-app.get(`${BASE_URL}/sketches/:slug/delete`, function(req, res) {
+app.get(`/sketches/:slug/delete`, function(req, res) {
   SketchController.delete(req.params.slug);
   res.json({ success: true });
 });
 
-app.get(`${BASE_URL}/sketches/:slug/activate`, function(req, res) {
+app.get(`/sketches/:slug/activate`, function(req, res) {
   SketchController.activate(req.params.slug);
   res.json({ success: true });
 });
@@ -299,5 +296,5 @@ fse.writeFileSync(path.resolve(TMP_PATH, 'SETTINGS.json'), JSON.stringify({
 
 
 app.listen(PORT, function () {
-  console.log(`Sketch server is listening on ${PORT}`);
+  console.log(`Sketch server is listening on ${PORT} prefixed by ${BASE_URL}`);
 });
