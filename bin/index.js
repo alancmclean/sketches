@@ -104,20 +104,16 @@ app.use(errorHandler);
 
 // define the home page route
 app.get('/', function(req, res) {
-  res.redirect('/sketches');
-  // var showCount = 10,
-  // sketches = SketchController.get();
-  
-  // if(!sketches){
-  //   res.send('sketches list is empty');
-  // }else{
-  //   var commits = [];
-  //   if(req.xhr){
-  //     res.json(JSON.stringify(sketches));
-  //   }else{
-  //     res.render('home', { BASE_URL: BASE_URL, sketches: sketches, commits: [], active: 'home' });
-  //   }
-  // }
+  var sketches = SketchController.get().filter(function(sketch){ return sketch.status > 0; });
+  if(!sketches){
+    res.send('sketches list is empty');
+  }else{
+    if(req.xhr){
+      res.json(JSON.stringify(sketches));
+    }else{
+      res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects', colors: COLORS_300  });
+    }
+  }
 });
 
 
@@ -165,18 +161,18 @@ app.get(`${BASE_URL}/manage`, function(req, res) {
   res.send('sketch admin');
 });
 
-app.get(`${BASE_URL}/sketches`, function(req, res) {
-  var sketches = SketchController.get().filter(function(sketch){ return sketch.status > 0; });
-  if(!sketches){
-    res.send('sketches list is empty');
-  }else{
-    if(req.xhr){
-      res.json(JSON.stringify(sketches));
-    }else{
-      res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects', colors: COLORS_300  });
-    }
-  }
-});
+// app.get(`${BASE_URL}/sketches`, function(req, res) {
+//   var sketches = SketchController.get().filter(function(sketch){ return sketch.status > 0; });
+//   if(!sketches){
+//     res.send('sketches list is empty');
+//   }else{
+//     if(req.xhr){
+//       res.json(JSON.stringify(sketches));
+//     }else{
+//       res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects', colors: COLORS_300  });
+//     }
+//   }
+// });
 
 app.get(`${BASE_URL}/archived`, function(req, res) {
   var sketches = SketchController.get().filter(function(sketch){ return sketch.status < 1; });
