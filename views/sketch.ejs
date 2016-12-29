@@ -12,10 +12,8 @@
       <main class="mdl-layout__content">
         <section class="mdl-grid">
 
-          <h4 class="mdl-cell mdl-cell--12-col"><%- sketch.name %>
-            
-          </h4>
-          <div class="mdl-cell mdl-cell--12-col mdl-grid--no-spacing">
+          <h4 class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"><%- sketch.name %></h4>
+          <div class="">
             <form action="<%- `${BASE_URL}/sketches/${sketch.slug}/update` %>" id="js-settings-form" class="settings-form mdl-cell--4-col mdl-cell" method="post">
              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
               
@@ -37,11 +35,10 @@
               
             </form>
 
-              <p>To get this sketch run the following in your console: <br/>
-                <i>git clone <%- cloneURL %></i></p>
-              </p>
           </div>
-          
+          <div class="mdl-cell mdl-cell--6-col">To get this sketch run the following in your console: <br/>
+            <i>git clone <%- cloneURL %></i></p>
+          </div>          
           <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--hide-phone">
             <h5><a target="_blank" href="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>"><i class="material-icons">launch</i></a>&nbsp;Preview – <span class="active-prototype">Latest <%- sketch.references[0].ref.split('/').slice(-1)[0]%></span></p></h5>
 
