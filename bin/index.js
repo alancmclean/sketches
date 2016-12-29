@@ -23,7 +23,6 @@ var argv = optimist.usage("Usage: $0")
     describe: "http port"
   })
   .options("baseURL", {
-    default: "",
     describe: "base url for the app to work from"
   })
   .options("screenshots", {
@@ -41,7 +40,7 @@ var argv = optimist.usage("Usage: $0")
   .argv;
 
 var DATA_PATH = (argv.data) ? path.resolve(__dirname, argv.data) : path.resolve(__dirname, "../data");;
-var BASE_URL = argv.baseURL;
+var BASE_URL = (argv.baseURL) ? argv.baseURL : "";
 var CLONE_URL = argv.cloneURL;
 var PORT = argv.port;
 var SCREENSHOTS_PATH = (argv.screenshots) ? path.resolve(argv.screenshots) : path.resolve(__dirname, "../", "static","screenshots");
