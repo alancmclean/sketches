@@ -12,7 +12,15 @@
       <main class="mdl-layout__content">
         <section class="mdl-grid">
 
-          <h4 class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"><%- sketch.name %></h4>
+          
+
+          <div class="mdl-cell mdl-cell--hide-phone">
+            <h4 class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"><%- sketch.name %></h4>
+            <h5><a target="_blank" href="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>"><i class="material-icons">launch</i></a>&nbsp;Preview – <span class="active-prototype">Latest <%- sketch.references[0].ref.split('/').slice(-1)[0]%></span></p></h5>
+
+            <iframe class="preview-frame mdl-shadow--3dp" width="100%" height="767" border="noborder" src="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>" id="preview-frame"></iframe>          
+          </div>
+
           <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-grid--no-spacing">
             <form action="<%- `${BASE_URL}/sketches/${sketch.slug}/update` %>" id="js-settings-form" class="settings-form mdl-cell--4-col mdl-cell" method="post">
              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -40,11 +48,7 @@
               </p>
           </div>
           
-          <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--hide-phone">
-            <h5><a target="_blank" href="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>"><i class="material-icons">launch</i></a>&nbsp;Preview – <span class="active-prototype">Latest <%- sketch.references[0].ref.split('/').slice(-1)[0]%></span></p></h5>
-
-            <iframe class="preview-frame mdl-shadow--3dp" width="100%" height="767" border="noborder" src="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>" id="preview-frame"></iframe>          
-          </div>
+          
           
           
           <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--12-col-phone">
