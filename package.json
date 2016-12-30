@@ -12,7 +12,7 @@
     "express": ">=4.0.0",
     "express-helpers": "latest",
     "express-formidable": "latest",
-    "fs-extra-promise": "latest",
+    "fs-extra": "latest",
     "material-design-lite": "^1.2.1",
     "materialize-css": "latest",
     "method-override": "latest",

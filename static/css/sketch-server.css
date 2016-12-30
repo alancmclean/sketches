@@ -85,10 +85,6 @@ main > .mdl-layout__tab-panel {
   height: auto;
 }
 
-.mdl-demo.mdl-card__supporting-text h4 {
-  margin-top: 0;
-  margin-bottom: 20px;
-}
 .mdl-card__actions {
   margin: 0;
   padding: 4px 10px;
@@ -218,6 +214,10 @@ section.section--center .section__text:not(:last-child) {
   margin-bottom: 16px;
 }
 
+h4{
+  margin-top:0;
+}
+
 .mdl-menu__container {
   z-index: 99;
 }
@@ -293,12 +293,8 @@ section.section--center .section__text:not(:last-child) {
 }
 /*.material-icons.md-light { color: rgba(255, 255, 255, 1); }*/
 
-.settings-form{
-  margin: 0;
-}
-
-.settings-form .mdl-textfield{
-  padding:5px 0;
+.settings.mdl-textfield{
+  padding: 5px 0;
 }
 
 .settings-form input{
@@ -320,4 +316,29 @@ section.section--center .section__text:not(:last-child) {
 .settings-form input:focus{
   box-shadow: inset 1px -1px 3px -1px rgba(0,0,0,.19);
   padding: 5px 10px;
+}
+
+.clone-text{
+  margin-bottom:8px;
+}
+
+.fixed-holder{
+  position:relative;
+  height:767px;
+}
+
+.fixed-frame{
+  position:absolute;
+}
+
+.fixed-frame.fixed{
+  position:fixed;
+  top: 0px;
+  /* this is assuming its a 6 col and js is not fired*/
+  width: calc(50% - 52px); 
+}
+
+.history{
+  margin-left: auto;
+  margin-right: 0;
 }

@@ -91,6 +91,10 @@ GitController.initalCommitHack = function(sketch, repository){
         }
       })
     })
+    .then(function(){
+      // need to ensure this happens after screenshot has been called
+      // return fse.remove(tmpPath);
+    })
     .catch(function(err){
       console.log(err);
     });

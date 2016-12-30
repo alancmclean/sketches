@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-var fse  = require('fs-extra-promise');
+var fse  = require('fs-extra');
 var mime    = require("mime");
 var d3TimeFormat = require('d3-time-format');
 var commitFormatter = d3TimeFormat.timeFormat("%x - %H:%M");

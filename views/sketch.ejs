@@ -6,52 +6,55 @@
 
   <body class="mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
     <% include partials/dialog %>
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="mdl-layout mdl-js-layout">
       <% include partials/navbar %>
     
       <main class="mdl-layout__content">
         <section class="mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col mdl-cell--12-col-phone">
+            <div class="mdl-grid">
+            <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+            <h4><%- sketch.name %></h4>
+            <div class="settings mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
 
-          
+              <input type="text" class="settings-field mdl-textfield__input" id="details_description" name="details_description" value="<%- sketch.description %>" />
 
-          <div class="mdl-cell mdl-cell--hide-phone">
-            <h4 class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone"><%- sketch.name %></h4>
-            <h5><a target="_blank" href="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>"><i class="material-icons">launch</i></a>&nbsp;Preview – <span class="active-prototype">Latest <%- sketch.references[0].ref.split('/').slice(-1)[0]%></span></p></h5>
-
-            <iframe class="preview-frame mdl-shadow--3dp" width="100%" height="767" border="noborder" src="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>" id="preview-frame"></iframe>          
-          </div>
-
-          <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-grid--no-spacing">
-            <form action="<%- `${BASE_URL}/sketches/${sketch.slug}/update` %>" id="js-settings-form" class="settings-form mdl-cell--4-col mdl-cell" method="post">
-             <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-              
-              <input type="text" class="mdl-textfield__input" id="details_description" name="details_description" value="<%- sketch.description %>" />
-              
             </div>
-
-
-            <div class="mdl-selectfield mdl-js-selectfield">
-            
-  <select id="details_status" name="details_status" class="mdl-selectfield__select">
-    
-    <option value="1" <% if (sketch.status == 1){ %>selected <% }%>>Active</option>
-    <option value="0" <% if (sketch.status == 0){ %>selected <% }%>>Archived</option>
-  </select>
-  <label class="mdl-selectfield__label" for="details_status">Status</label>
-</div>
-              
-              
-            </form>
-
-              <p>To get this sketch run the following in your console: <br/>
-                <i>git clone <%- cloneURL %></i></p>
-              </p>
           </div>
+
+          <div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+            <p class="clone-text">To get this sketch: <i>git clone <%- cloneURL %></i>
+            </p>
+            <form action="<%- `${BASE_URL}/sketches/${sketch.slug}/update` %>" id="js-settings-form" class="settings mdl-cell--4-col mdl-cell" method="post">
+              
+
+
+              <div class="mdl-selectfield mdl-js-selectfield">
+
+              <select id="details_status" name="details_status" class="settings-field mdl-selectfield__select">
+
+              <option value="1" <% if (sketch.status == 1){ %>selected <% }%>>Status: Active</option>
+              <option value="0" <% if (sketch.status == 0){ %>selected <% }%>>Status: Archived</option>
+              </select>
+              <label class="mdl-selectfield__label" for="details_status">Status</label>
+              </div>
+
+
+            </form>
+            </div>
+          </div>
+
+        <div class="mdl-grid fixed-holder">
+          <div class="fixed-frame mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
+            
+              <h5><a target="_blank" href="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>"><i class="material-icons">launch</i></a>&nbsp;Preview – <span class="active-prototype">Latest <%- sketch.references[0].ref.split('/').slice(-1)[0]%></span></p></h5>
+
+              <iframe class="mdl-cell--hide-phone preview-frame mdl-shadow--3dp" width="100%" height="767" border="noborder" src="<%- `${BASE_URL}/view/${sketch.slug}/${sketch.references[0].ref.split('/').slice(-1)[0]}/latest/` %>" id="preview-frame"></iframe>
+          </div>
+
           
-          
-          
-          
-          <div class="mdl-cell mdl-cell--6-col mdl-cell--6-col-tablet mdl-cell--12-col-phone">
+            
+          <div class="history mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
             <div class="branches">
               <h5>Prototypes</h5>
               <dl class="item-list">
@@ -77,14 +80,63 @@
               </dl>
             </div>
           </div>
+          </div>
+          </div>
+
+
         </section>          
       </main>
     </div>  
     <% include partials/footer %>
     <% if (md.mobile() === null){ %>
+      <script href="/js/util.js"></script>
       <script type="text/javascript">
+
+        var pos = 0,
+            ticking = false,
+            content = document.querySelector('.mdl-layout'),
+            isFixed = false,
+            preview = document.querySelector('.fixed-frame'),
+            previewPosition = findPosition(preview);
+
+        function findPosition(obj) {
+          var curleft = curtop = 0;
+
+          if (obj.offsetParent)
+          do {
+              curleft += obj.offsetLeft;
+              curtop += obj.offsetTop;
+
+          } while (obj = obj.offsetParent);
+
+          return [curleft,curtop];
+        }
+
+        function checkPosition(scrollPos) {
+          
+          
+          if(scrollPos > previewPosition[1] && isFixed === false){
+            preview.classList.add('fixed');
+            isFixed = true;
+          }else if(scrollPos < previewPosition[1] && isFixed === true){
+            preview.classList.remove('fixed');
+            isFixed = false;
+          }
+          // do something with the scroll position
+        }
+
+        content.addEventListener('scroll', function(e) {
+          pos = content.scrollTop;
+          if (!ticking) {
+            window.requestAnimationFrame(function() {
+              checkPosition(pos);
+              ticking = false;
+            });
+          }
+          ticking = true;
+        });
         // editing logic
-        var fields = document.querySelectorAll('.settings-form input, .settings-form select');
+        var fields = document.querySelectorAll('.settings-field');
         var form = document.getElementById('js-settings-form');
         fields.forEach(function(field){
           field.addEventListener('change', function(e){
