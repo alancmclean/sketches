@@ -23,7 +23,11 @@ if(sketch.length > 0){
     var finalPath = path.resolve(settings.screenshots, slug, rev+'-thumb.jpg');
     var cmd = `capturejs --uri 'http://localhost:${settings.port}/view/${slug}/${rev}/' --output ${tmpPath} --viewportsize 1024x768 --web-security=no`;
 
-    
+    var dir = path.resolve(settings.screenshots, slug);
+    if (!fse.existsSync(dir)){
+      fse.mkdirSync(dir);
+    }
+
     exec(cmd, function(error, stdout, stderr) {
       if(error) {
         console.log('nope')
