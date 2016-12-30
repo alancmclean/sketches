@@ -6,6 +6,7 @@ var commitFormatter = d3TimeFormat.timeFormat("%x - %H:%M");
 var path  = require('path');
 var url  = require('url');
 var optimist = require("optimist");
+var CommandQueue = require("command-queue");
 
 var argv = optimist.usage("Usage: $0")
   .options("h", {
@@ -184,6 +185,25 @@ app.get(`/archived`, function(req, res) {
 });
 
 
+var executeQueue = function(args){
+  console.log('=====',arguments, args)
+  new CommandQueue()
+      .sync(arguments[0])
+      .run()
+      .then(    
+        function() {
+          console.log('successfully executed ', arguments.length, ' commands');
+        },
+        function() {
+          console.log('failure');
+
+          // Close any remaining commands.
+          queue.close();
+        }
+    );
+};
+
+
 // regnerate screenshots for a repo
 app.get(`/tasks/regenerate/:slug`, function(req, res) {
   var sketch = SketchController.get(req.params.slug);
@@ -196,18 +216,11 @@ app.get(`/tasks/regenerate/:slug`, function(req, res) {
         console.log('proceeding to jobs');
 
         var tasks = result.commits.map(function(commit){
-          new Promise(function(resolve, reject){
-            exec(`node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`, function(error, stdout, stderr) {
-              if(error) {
-                console.log(error);
-                return reject(error);
-              }
-              return resolve();
-            });
-          })
+          return `node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`;
         });
-  
-        return Promise.all(tasks);
+
+        executeQueue.apply(this, tasks);
+        
       })
       
       .catch(function(err){

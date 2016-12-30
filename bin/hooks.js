@@ -2,6 +2,8 @@
 
 var slug = process.argv[2];
 var rev = process.argv[3];
+var writeLatest = (process.argv[4]) ? true : false;
+
 var path = require('path');
 var fse  = require('fs-extra');
 var storage = require('node-persist');
@@ -49,10 +51,13 @@ if(sketch.length > 0){
              throw(err);
              process.exit(0);
             }
-            fse.copySync(finalPath, path.resolve(settings.screenshots, slug, 'latest.jpg'));
+            if(writeLatest){
+              fse.copySync(finalPath, path.resolve(settings.screenshots, slug, 'latest.jpg'));  
+            }
+            
             fse.removeSync(tmpPath);
             // check err...
-            // done.
+            console.log('wrote an image: ', finalPath)
             process.exit(0);              
           });
         })          

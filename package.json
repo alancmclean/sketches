@@ -24,7 +24,8 @@
     "mobile-detect": "latest",
     "optimist": "latest",
     "webshot": "latest",
-    "lwip": "latest"
+    "lwip": "latest",
+    "command-queue": "latest"
   },
   "devDependencies": {}
 }

@@ -20,7 +20,7 @@ process.stdin.on('end', function() {
   var commitArgs = content.split('').join('').split(' ');
   var rev = commitArgs[1];
   console.log('path!', scriptPath);
-  child.exec(`node ${scriptPath} ${slug} ${rev}`, function(err, out) {
+  child.exec(`node ${scriptPath} ${slug} ${rev} true`, function(err, out) {
     if (err instanceof Error) {
       throw err;
     }
