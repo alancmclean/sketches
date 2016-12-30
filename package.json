@@ -23,7 +23,7 @@
     "d3-time-format": "latest",
     "mobile-detect": "latest",
     "optimist": "latest",
-    "capturejs": "latest",
+    "webshot": "latest",
     "lwip": "latest"
   },
   "devDependencies": {}
