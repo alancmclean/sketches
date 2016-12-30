@@ -192,20 +192,24 @@ app.get(`/tasks/regenerate/:slug`, function(req, res) {
   }else{
     gitController.getCommitsAndRefs(`${sketch.path}`)
       .then(function(result){
-        
-        
-        result.commits.forEach(function(commit){
-          console.log('regenerating for: ', commit.sha())
+        res.sendStatus(200);
+        console.log('proceeding to jobs');
 
-          exec(`node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`, function(error, stdout, stderr) {
-            if(error) {
-              console.log(error)
-            }
-            // assuming success which is a problem we'll address later
-          });
+        var tasks = result.commits.map(function(commit){
+          new Promise(function(resolve, reject){
+            exec(`node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`, function(error, stdout, stderr) {
+              if(error) {
+                console.log(error);
+                return reject(error);
+              }
+              return resolve();
+            });
+          })
         });
-
+  
+        return Promise.all(tasks);
       })
+      
       .catch(function(err){
         console.log(err)
         res.status(500).send('error opening!', err);
@@ -249,7 +253,7 @@ app.post(`/sketches/:slug/update`, function(req, res) {
   // console.log('====>',req.body)
   SketchController.update(req.params.slug, req.body);
   // }
-  res.send(200)
+  res.sendStatus(200)
 });
 
 
