@@ -185,22 +185,28 @@ app.get(`/archived`, function(req, res) {
 });
 
 
-var executeQueue = function(args){
-  console.log('=====',arguments, args)
-  new CommandQueue()
-      .sync(arguments[0])
-      .run()
-      .then(    
-        function() {
-          console.log('successfully executed ', arguments.length, ' commands');
-        },
-        function() {
-          console.log('failure');
+var executeQueue = function(tasks){
+  var onSuccess = function(){
+    if(tasks.length > 0){
+      
+      new CommandQueue()
+        .sync(tasks[0])
+        .run()
+        .then(onSuccess, onFail);
 
-          // Close any remaining commands.
-          queue.close();
-        }
-    );
+      console.log('successfully executed ', tasks[0], ' commands');
+      tasks.shift();
+    }    
+    
+  };
+  var onFail = function(){
+    console.log('failure');
+    // Close any remaining commands.
+    queue.close();
+  };
+
+  onSuccess();
+
 };
 
 
@@ -219,7 +225,7 @@ app.get(`/tasks/regenerate/:slug`, function(req, res) {
           return `node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`;
         });
 
-        executeQueue.apply(this, tasks);
+        executeQueue(tasks);
         
       })
       
