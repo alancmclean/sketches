@@ -57,7 +57,7 @@
           <div class="history mdl-cell mdl-cell--6-col mdl-cell--12-col-phone">
             <div class="branches">
               <h5>Prototypes</h5>
-              <dl class="item-list">
+              <dl class="item-list prototype-list">
                 <% sketch.references.forEach(function(reference, i){ %>
                 <dd class="<% if(i === 0){ %>active<% } %>" data-name="<%- reference.ref.split('/').slice(-1)[0] %>">
                   <a href="<%-`${BASE_URL}/view/${sketch.slug}/${reference.ref.split('/').slice(-1)[0]}/latest/` %>">
@@ -74,7 +74,7 @@
               <% sketch.commits.forEach(function(commit){ %>
               <dd data-name="<%- commit.sha() %>">
                 <i><%- commitFormatter(commit.date()) %> by <%- commit.committer() %></i>
-                <%- link_to(commit.message(), `/view/${sketch.slug}/${commit.sha()}/`) %></dd>
+                <%- link_to(commit.message(), `${BASE_URL}/view/${sketch.slug}/${commit.sha()}/`) %></dd>
               </li>
               <% })%>            
               </dl>
