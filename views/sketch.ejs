@@ -61,7 +61,7 @@
                 <% sketch.references.forEach(function(reference, i){ %>
                 <dd class="<% if(i === 0){ %>active<% } %>" data-name="<%- reference.ref.split('/').slice(-1)[0] %>">
                   <a href="<%-`${BASE_URL}/view/${sketch.slug}/${reference.ref.split('/').slice(-1)[0]}/latest/` %>">
-                    <img class="thumbnail" src="/screenshots/<%- `${sketch.slug}/${reference.commit}-thumb.jpg` %>" />
+                    <img class="thumbnail" src="${BASE_URL}/screenshots/<%- `${sketch.slug}/${reference.commit}-thumb.jpg` %>" />
                     <%- reference.ref.split('/').slice(-1)[0] %>
                   </a>
                 </dd>
