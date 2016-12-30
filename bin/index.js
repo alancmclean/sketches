@@ -184,9 +184,35 @@ app.get(`/archived`, function(req, res) {
 });
 
 
-// app.get('/projects/:slug', function(req, res) {
+// regnerate screenshots for a repo
+app.get(`/tasks/regenerate/:slug`, function(req, res) {
+  var sketch = SketchController.get(req.params.slug);
+  if(!sketch){
+    res.status(404).send("error, sketch doesnt exist");
+  }else{
+    gitController.getCommitsAndRefs(`${sketch.path}`)
+      .then(function(result){
+        
+        
+        result.commits.forEach(function(commit){
+          console.log('regenerating for: ', commit.sha())
 
-// });
+          exec(`node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`, function(error, stdout, stderr) {
+            if(error) {
+              console.log(error)
+            }
+            // assuming success which is a problem we'll address later
+          });
+        });
+
+      })
+      .catch(function(err){
+        console.log(err)
+        res.status(500).send('error opening!', err);
+      });
+  }
+});
+
 
 app.get(`/sketches/:slug`, function(req, res) {
   var sketch = SketchController.get(req.params.slug);
