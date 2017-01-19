@@ -150,7 +150,7 @@ app.post(`/create/submit`, function(req, res) {
       if(req.xhr){
         return res.json(JSON.stringify(sketches));
       }else{
-        res.redirect(`/sketches#${slug}`);
+        res.redirect(`/`);
       }  
     }).catch(function(result){
       res.status(500).send("error, cant make sketch");
@@ -221,8 +221,9 @@ app.get(`/tasks/regenerate/:slug`, function(req, res) {
         res.sendStatus(200);
         console.log('proceeding to jobs');
 
-        var tasks = result.commits.map(function(commit){
-          return `node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}`;
+        var tasks = result.commits.map(function(commit, i){
+          var writeLatest = (i === tasks.length - 1) ? ' true' : '';
+          return `node ${path.resolve( __dirname, "hooks.js")} ${sketch.slug} ${commit.sha()}${writeLatest}`;
         });
 
         executeQueue(tasks);
