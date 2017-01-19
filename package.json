@@ -4,7 +4,7 @@
   "version": "0.0.5",
   "author": "Alan McLean",
   "bin": {
-    "sketch-server": "bin/server.js"
+    "sketch-server": "bin/index.js"
   },
   "dependencies": {
     "body-parser": "latest",
