@@ -23,8 +23,6 @@
     "d3-time-format": "latest",
     "mobile-detect": "latest",
     "optimist": "latest",
-    "webshot": "latest",
-    "lwip": "latest",
     "command-queue": "latest"
   },
   "devDependencies": {}
