@@ -24,7 +24,9 @@
     "d3-time-format": "latest",
     "mobile-detect": "latest",
     "optimist": "latest",
-    "command-queue": "latest"
+    "command-queue": "latest",
+    "lwip": "latest",
+    "webshot": "latest"
   },
   "devDependencies": {}
 }
