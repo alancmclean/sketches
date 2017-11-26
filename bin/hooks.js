@@ -7,7 +7,8 @@ var writeLatest = (process.argv[4]) ? true : false;
 var path = require('path');
 var fse  = require('fs-extra');
 var storage = require('node-persist');
-var lwip = require('lwip');
+// var lwip = require('lwip');
+var jimp =  require('jimp');
 var contents = fse.readFileSync(path.resolve(__dirname, "../tmp/SETTINGS.json"));
 var settings = JSON.parse(contents);
 var webshot = require('webshot');
@@ -36,7 +37,7 @@ if(sketch.length > 0){
         console.log(error)
       }
 
-      lwip.open(tmpPath, function(err, image){
+      jimp.read(tmpPath, function(err, image){
         console.log('trying to open', image)
         if(err){
           console.log(';first errror')
@@ -46,14 +47,14 @@ if(sketch.length > 0){
         // check err...
         // define a batch of manipulations and save to disk as JPEG:
         image.scale(.35, function(err, img){
-          img.writeFile(finalPath, function(err){
+          img.write(finalPath, function(err){
             if(err){
              throw(err);
              process.exit(0);
             }
-            if(writeLatest){
-              fse.copySync(finalPath, path.resolve(settings.screenshots, slug, 'latest.jpg'));  
-            }
+            // if(writeLatest){
+            fse.copySync(finalPath, path.resolve(settings.screenshots, slug, 'latest.jpg'));  
+            // }
             
             fse.removeSync(tmpPath);
             // check err...

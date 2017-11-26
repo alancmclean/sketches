@@ -45,7 +45,7 @@ var BASE_URL = (argv.baseURL) ? argv.baseURL : "";
 var CLONE_URL = argv.cloneURL;
 var PORT = argv.port;
 var SCREENSHOTS_PATH = (argv.screenshots) ? path.resolve(argv.screenshots) : path.resolve(__dirname, "../", "static","screenshots");
-var REPO_PATH = (argv.repositories) ? path.resolve(argv.repositories) : path.resolve(__dirname, "../", "repository");
+var REPO_PATH = (argv.repositories) ? path.resolve(argv.repositories) : path.resolve(__dirname, "../", "repositories");
 var TMP_PATH = path.resolve(__dirname, "../", "tmp");
 var MobileDetect = require('mobile-detect');
 
@@ -54,8 +54,6 @@ var express = require('express');
 var app = express();
 app.enable('strict routing');
 
-var COLORS_700 = ['#D32F2F', '#C2185B', '#7B1FA2', '#512DA8', '#303F9F', '#1976D2', '#0288D1', '#0097A7', '#00796B', '#388E3C', '#689F38', '#AFB42B', '#FBC02D', '#FFA000', '#F57C00', '#E64A19', '#5D4037', '#616161', '#455A64'];
-var COLORS_300 = ['#E57373', '#F06292', '#BA68C8', '#9575CD', '#7986CB', '#64B5F6', '#4FC3F7', '#4DD0E1', '#4DB6AC', '#81C784', '#AED581', '#DCE775', '#FFF176', '#FFD54F', '#FFB74D', '#FF8A65', '#A1887F', '#E0E0E0', '#90A4AE'];
 var gitController = require('../server/GitController.js');
 app.use(express.static('static'));
 
@@ -73,7 +71,7 @@ var slugify = require('./utils/slugify.js');
 
 // borrowed from mbostock
 function mimeType(file) {
-  var type = mime.lookup(file);
+  var type = mime.getType(file);
   return text(type) ? type + "; charset=utf-8" : type;
 }
 
@@ -111,7 +109,7 @@ app.get('/', function(req, res) {
     if(req.xhr){
       res.json(JSON.stringify(sketches));
     }else{
-      res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects', colors: COLORS_300  });
+      res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects' });
     }
   }
 });
@@ -166,7 +164,7 @@ app.post(`/create/submit`, function(req, res) {
 //     if(req.xhr){
 //       res.json(JSON.stringify(sketches));
 //     }else{
-//       res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects', colors: COLORS_300  });
+//       res.render('sketches', { BASE_URL: BASE_URL, sketches: sketches, active: 'sketches', hed: 'Active Projects'  });
 //     }
 //   }
 // });
@@ -179,7 +177,7 @@ app.get(`/archived`, function(req, res) {
     if(req.xhr){
       res.json(JSON.stringify(sketches));
     }else{
-      res.render('archived', { BASE_URL: BASE_URL, sketches: sketches, active: 'archived', hed: 'Archived Projects', colors: COLORS_300  });
+      res.render('archived', { BASE_URL: BASE_URL, sketches: sketches, active: 'archived', hed: 'Archived Projects'  });
     }
   }
 });
@@ -289,9 +287,12 @@ app.get(`/view/:slug/:branch/latest/*?`, function(req, res) {
   var sketch    = SketchController.get(slug);
 
   if(sketch){
+    console.log('tryingt to get:', sketch.path)
     gitController.getFile(sketch.path, revision, path).then(function(blob){
       res.set('Content-Type', mimeType(path));
       res.send(blob.content());
+    }).catch(function(err){
+      console.log(err);
     });
   }else{
     res.send(`couldnt find ${slug} file`);  

@@ -122,6 +122,7 @@ GitController.createSketch = function(sketch){
 GitController.openRepository = function(path){
  return NodeGit.Repository.openBare(path)
   .then(function (repo) {
+    console.log(repo)
     return repo;
   }).catch(function(err){
     return err;
@@ -213,6 +214,7 @@ GitController.getFile = function(path, revision, filename){
 
   return GitController.openRepository(path)
     .then(function(repo){
+      
       var match = revision.match(/(test)|(tag=.*)|(branch=.*)|(latest)/i);
       if(match === null){
         return repo.getCommit(revision);
@@ -228,6 +230,7 @@ GitController.getFile = function(path, revision, filename){
           return commit;
         });
       }else if(match[0] === 'latest'){
+        console.log('repo: ', repo.getHeadCommit)
         return repo.getHeadCommit();
       }
     })

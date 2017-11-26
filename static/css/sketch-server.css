@@ -222,6 +222,10 @@ h4{
   margin-top:0;
 }
 
+.branches h5{
+  margin-top: 0;
+}
+
 .mdl-menu__container {
   z-index: 99;
 }
@@ -256,9 +260,9 @@ h4{
 .alert{
   color:#f00;
 }
-.branches{
+/*.branches{
   padding-top:.4em;
-}
+}*/
 .item-list{
   margin: 1em 0;
 }
@@ -269,11 +273,11 @@ h4{
 }
 .item-list dd{
   margin: 0;
-  padding: .7em;
-  border-bottom: 1px solid #ECEFF1;
+  padding: .7em .7em .7em 0;
+  /*border-bottom: 1px solid #ECEFF1;*/
 }
 .item-list img{
-  margin: 0 10px 0 0;
+  margin: 0 10px;
 }
 
 .item-list .active{
@@ -297,11 +301,17 @@ h4{
 
 .mdl-card__title-text{
   text-shadow: 0 0 3px rgba(0,0,0,.35);
+  mix-blend-mode: difference;
 }
 /*.material-icons.md-light { color: rgba(255, 255, 255, 1); }*/
 
+.settings-container{
+  border-top: 2px solid #333;
+  padding-top:15px;
+}
 .settings.mdl-textfield{
-  padding: 5px 0;
+  /*padding: 5px 0;*/
+
 }
 
 .settings-form input{
@@ -334,8 +344,12 @@ h4{
   height:767px;
 }
 
+.commits{
+  border-top: 2px solid #333;
+  padding-top:15px;
+}
 .fixed-frame{
-  position:absolute;
+  /*position:absolute;*/
 }
 
 .fixed-frame.fixed{
